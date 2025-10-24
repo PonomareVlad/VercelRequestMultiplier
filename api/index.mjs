@@ -10,8 +10,8 @@ export default {
 
 async function multiplyRequest(request, url) {
     const init = {
+        body: request.body,
         method: request.method,
-        body: request.clone().body,
         headers: Object.fromEntries(request.headers.entries()),
     }
     const response = await fetch(url, init)
