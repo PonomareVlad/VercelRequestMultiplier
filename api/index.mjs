@@ -1,7 +1,7 @@
 export default {
     async fetch(request) {
         const urls = new URL(request.url).searchParams.getAll('url')
-        const requests = urls.map(multiplyRequest.bind(request))
+        const requests = urls.map(multiplyRequest.bind(null, request))
         const response = await Promise.allSettled(requests)
         console.log(urls, response)
         return Response.json(response)
