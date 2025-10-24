@@ -20,6 +20,15 @@ async function multiplyRequest(request, url) {
         status: response.status,
         statusText: response.statusText,
         headers: Object.fromEntries(response.headers.entries()),
-        body: await response.text(),
+        body: getBody(response),
+    }
+}
+
+function getBody(response) {
+    switch (response.headers.get('content-type')) {
+        case 'application/json':
+            return response.json()
+        default:
+            return response.text()
     }
 }
