@@ -1,6 +1,7 @@
 export default {
     fetch(request, response) {
-        console.log(request.method, new URL(request.url), request.body)
+        const url = new URL(request.url)
+        console.log(request.method, Object.fromEntries(url.searchParams.entries()), request.body)
         return Response.json({});
     },
 };
