@@ -20,7 +20,7 @@ async function multiplyRequest(request, url) {
         status: response.status,
         statusText: response.statusText,
         headers: Object.fromEntries(response.headers.entries()),
-        body: getBody(response),
+        body: await getBody(response),
     }
 }
 
