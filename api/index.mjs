@@ -12,7 +12,7 @@ async function multiplyRequest(request, url) {
     const init = {
         body: request.body,
         method: request.method,
-        headers: Object.fromEntries(request.headers.entries()),
+        headers: request.headers,
     }
     const response = await fetch(url, init)
     return { ...response, body: await response.text() }
