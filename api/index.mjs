@@ -14,6 +14,7 @@ async function multiplyRequest(request, url) {
         method: request.method,
         headers: request.headers,
     }
+    if (request.body) init.duplex = 'half'
     const response = await fetch(url, init)
     return {
         ok: response.ok,
