@@ -15,5 +15,11 @@ async function multiplyRequest(request, url) {
         headers: request.headers,
     }
     const response = await fetch(url, init)
-    return { ...response, body: await response.text() }
+    return {
+        ok: response.ok,
+        status: response.status,
+        statusText: response.statusText,
+        headers: response.headers,
+        body: await response.text(),
+    }
 }
