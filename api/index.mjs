@@ -1,20 +1,23 @@
 export default {
     async fetch(request) {
         const urls = new URL(request.url).searchParams.getAll('url')
-        const requests = urls.map(multiplyRequest.bind(null, request))
+        const body = request.body ? await request.arrayBuffer() : undefined
+        const requests = urls.map(multiplyRequest.bind(null, request, body))
         const response = await Promise.allSettled(requests)
         console.log(urls, response)
         return Response.json(response)
     },
 }
 
-async function multiplyRequest(request, url) {
+async function multiplyRequest(request, body, url) {
     const init = {
-        body: request.body,
         method: request.method,
         headers: request.headers,
     }
-    if (request.body) init.duplex = 'half'
+    if (body) {
+        init.duplex = 'half'
+        init.body = body.slice(0)
+    }
     const response = await fetch(url, init)
     return {
         ok: response.ok,
