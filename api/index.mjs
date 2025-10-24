@@ -1,8 +1,6 @@
 export default {
     fetch(request, response) {
-        console.log(request.method, request.query, request.body, request.headers)
-        console.log(request)
-        console.log(response)
+        console.log(request.method, request.url.query, request.body)
         return Response.json({});
     },
 };
