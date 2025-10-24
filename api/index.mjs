@@ -1,7 +1,19 @@
 export default {
-    fetch(request, response) {
-        const url = new URL(request.url)
-        console.log(request.method, url.searchParams.getAll('url'), request.body)
-        return Response.json({});
+    async fetch(request) {
+        const urls = new URL(request.url).searchParams.getAll('url')
+        const requests = urls.map(multiplyRequest.bind(request))
+        const response = await Promise.allSettled(requests)
+        console.log(urls, response)
+        return Response.json(response)
     },
-};
+}
+
+async function multiplyRequest(request, url) {
+    const init = {
+        method: request.method,
+        body: request.clone().body,
+        headers: Object.fromEntries(request.headers.entries()),
+    }
+    const response = await fetch(url, init)
+    return { ...response, body: await response.text() }
+}
