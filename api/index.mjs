@@ -1,7 +1,8 @@
 export default {
-    fetch({body, query, cookies, headers}) {
-        return Response.json({
-            body, query, cookies, headers, env: process.env, versions: process.versions
-        });
+    fetch(request, response) {
+        console.log(request.method, request.query, request.body, request.headers)
+        console.log(request)
+        console.log(response)
+        return Response.json({});
     },
 };
